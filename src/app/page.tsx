@@ -80,7 +80,6 @@ export default function Component() {
       alert("Insufficient funds")
     }
   }
-
   const handleViewChart = (ico: any) => {
     setSelectedICO(ico)
     setShowChart(true)
