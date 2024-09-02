@@ -69,7 +69,7 @@ export default function Component() {
 
   const filteredIcos = allIcos.filter(ico => 
     ico.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    ico.symbol.toLowerCase().includes(searchTerm.toLowerCase())
+    ico.symbol.toLowerCase().includes(searchTerm.toLowerCase()) 
   )
 
   const handleWithdraw = (amount: number) => {
@@ -314,8 +314,9 @@ export default function Component() {
                       <TableCell className={ico.change.startsWith('+') ? 'text-green-500' : 'text-red-500'}>
                         {ico.change}
                       </TableCell>
-                      <TableCell>{ico.marketCap}</TableCell>
-                      <TableCell>{ico.volume}</TableCell>
+                      <TableCell>{(ico as any).marketCap}</TableCell>
+                      <TableCell>{(ico as any).volume}</TableCell>
+
                       <TableCell>{ico.status}</TableCell>
                       <TableCell>
                         <Button size="sm" variant={"outline"} className="mr-2" onClick={() => handleViewChart(ico)}>View Chart</Button>
@@ -398,12 +399,12 @@ export default function Component() {
       <Dialog open={showChart} onOpenChange={setShowChart}>
         <DialogContent className="sm:max-w-[725px]">
           <DialogHeader>
-            <DialogTitle>{selectedICO?.name} ({selectedICO?.symbol}) Price Chart</DialogTitle>
+            <DialogTitle>{(selectedICO as any).name} ({(selectedICO as any).symbol}) Price Chart</DialogTitle>
           </DialogHeader>
           {selectedICO && (
             <div className="h-[400px] w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={generatePriceHistory(selectedICO.price)}>
+                <LineChart data={generatePriceHistory((selectedICO as any).price)}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="date" />
                   <YAxis />
