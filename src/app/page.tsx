@@ -398,7 +398,7 @@ export default function Component() {
       <Dialog open={showChart} onOpenChange={setShowChart}>
         <DialogContent className="sm:max-w-[725px]">
           <DialogHeader>
-            <DialogTitle>{(selectedICO as any).name} ({(selectedICO as any).symbol}) Price Chart</DialogTitle>
+            <DialogTitle> Price Chart</DialogTitle>
           </DialogHeader>
           {selectedICO && (
             <div className="h-[400px] w-full">
