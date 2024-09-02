@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Label } from "@/components/ui/label"
 import { BarChart3, Search, TrendingUp, Wallet, History, PlusCircle } from "lucide-react"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { Menu, X } from "lucide-react"
 
 // Mock data for featured ICOs
 const featuredIcos = [
@@ -62,6 +63,7 @@ const generatePriceHistory = (initialPrice: string, days = 30) => {
 }
 
 export default function Component() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [accountBalance, setAccountBalance] = useState(10000) // Mock account balance
   const [selectedICO, setSelectedICO] = useState(null)
@@ -85,67 +87,90 @@ export default function Component() {
     setShowChart(true)
   }
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
+  }
+
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="px-4 lg:px-20 h-14 flex items-center">
-        <a className="flex items-center justify-center" href="#">
-          <TrendingUp className="h-6 w-6" />
-          <span className="ml-2 md:text-lg text-sm font-semibold">ICO Connect</span>
+    <div className="flex flex-col w-full min-h-screen">
+      <header className="px-4 lg:px-20 h-14 flex items-center relative">
+      <a className="flex items-center justify-center" href="#">
+        <TrendingUp className="h-6 w-6" />
+        <span className="ml-2 md:text-lg text-sm font-semibold">ICO Connect</span>
+      </a>
+      <button
+        className="ml-auto md:hidden"
+        onClick={toggleMenu}
+        aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+      >
+        {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+      </button>
+      <nav className={`
+        ${isMenuOpen ? 'flex' : 'hidden'}
+        md:flex flex-col md:flex-row
+        absolute md:relative top-14 md:top-0 left-0 right-0
+        bg-white md:bg-transparent
+        shadow-md md:shadow-none
+        items-start md:items-center
+        p-4 md:p-0
+        md:ml-auto
+        gap-4 sm:gap-6
+        transition-all duration-300 ease-in-out
+        z-50
+      `}>
+        <a className="text-sm font-medium hover:underline underline-offset-4" href="#">
+          Home
         </a>
-        <nav className="ml-auto flex items-center gap-4 sm:gap-6">
-          <a className="text-sm font-medium hover:underline underline-offset-4" href="#">
-            Home
-          </a>
-          <a className="text-sm font-medium hover:underline underline-offset-4" href="#">
-            ICOs
-          </a>
-          <a className="text-sm font-medium hover:underline underline-offset-4" href="#">
-            Portfolio
-          </a>
-          <a className="text-sm font-medium hover:underline underline-offset-4" href="#">
-            About
-          </a>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="outline" size="sm">
-                <PlusCircle className="mr-2 h-4 w-4" />
-                List an ICO
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle>List a New ICO</DialogTitle>
-                <DialogDescription>
-                  Provide the details of the new ICO you want to list on our platform.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="name" className="text-right">
-                    Name
-                  </Label>
-                  <Input id="name" className="col-span-3" />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="symbol" className="text-right">
-                    Symbol
-                  </Label>
-                  <Input id="symbol" className="col-span-3" />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="price" className="text-right">
-                    Initial Price
-                  </Label>
-                  <Input id="price" className="col-span-3" />
-                </div>
+        <a className="text-sm font-medium hover:underline underline-offset-4" href="#">
+          ICOs
+        </a>
+        <a className="text-sm font-medium hover:underline underline-offset-4" href="#">
+          Portfolio
+        </a>
+        <a className="text-sm font-medium hover:underline underline-offset-4" href="#">
+          About
+        </a>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="outline" size="sm" className="w-full md:w-auto">
+              <PlusCircle className="mr-2 h-4 w-4" />
+              List an ICO
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>List a New ICO</DialogTitle>
+              <DialogDescription>
+                Provide the details of the new ICO you want to list on our platform.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">
+                  Name
+                </Label>
+                <Input id="name" className="col-span-3" />
               </div>
-              <DialogFooter>
-                <Button type="submit">Submit for Review</Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        </nav>
-      </header>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="symbol" className="text-right">
+                  Symbol
+                </Label>
+                <Input id="symbol" className="col-span-3" />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="price" className="text-right">
+                  Initial Price
+                </Label>
+                <Input id="price" className="col-span-3" />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="submit">Submit for Review</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </nav>
+    </header>
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container lg:px-20 px-4 md:px-6">
