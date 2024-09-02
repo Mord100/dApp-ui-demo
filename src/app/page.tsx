@@ -81,7 +81,7 @@ export default function Component() {
     }
   }
 
-  const handleViewChart = (ico: { id: number; name: string; symbol: string; price: string; change: string; status: string } | SetStateAction<null>) => {
+  const handleViewChart = (ico: any) => {
     setSelectedICO(ico)
     setShowChart(true)
   }
