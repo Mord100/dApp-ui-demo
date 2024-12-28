@@ -8,41 +8,57 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
-import { BarChart3, Search, TrendingUp, Wallet, History, PlusCircle } from "lucide-react"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
-import { Menu, X } from "lucide-react"
+import { BarChart3, Search, TrendingUp, Wallet, History, PlusCircle } from 'lucide-react'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
+import { Menu, X } from 'lucide-react'
 
 // Mock data for featured ICOs
 const featuredIcos = [
-  { id: 1, name: "DefiChain", symbol: "DFI", price: "1.20", change: "+5.2%", status: "Active" },
-  { id: 2, name: "Polkadot", symbol: "DOT", price: "7.80", change: "-2.1%", status: "Active" },
-  { id: 3, name: "Cardano", symbol: "ADA", price: "0.50", change: "+1.8%", status: "Active" },
-  { id: 4, name: "Ethereum 2.0", symbol: "ETH2", price: "1800", change: "+0.5%", status: "Upcoming" },
-  { id: 5, name: "Filecoin", symbol: "FIL", price: "5.60", change: "-3.7%", status: "Active" },
+  { id: 1, name: "MalawiCoin", symbol: "MWC", price: "500", change: "+3.2%", status: "Active" },
+  { id: 2, name: "AfriConnect", symbol: "AFC", price: "250", change: "-1.5%", status: "Active" },
+  { id: 3, name: "LilongweTech", symbol: "LTK", price: "150", change: "+2.8%", status: "Active" },
+  { id: 4, name: "ZombaCrypto", symbol: "ZBC", price: "75", change: "+0.5%", status: "Upcoming" },
+  { id: 5, name: "MalawiBlockchain", symbol: "MBK", price: "200", change: "-2.7%", status: "Active" },
 ]
 
 // Mock data for all ICOs
 const allIcos = [
   ...featuredIcos,
-  { id: 6, name: "Chainlink", symbol: "LINK", price: "6.70", change: "+2.3%", status: "Active", marketCap: "$3.4B", volume: "$245M" },
-  { id: 7, name: "Uniswap", symbol: "UNI", price: "5.20", change: "-1.5%", status: "Active", marketCap: "$2.6B", volume: "$180M" },
-  { id: 8, name: "Aave", symbol: "AAVE", price: "60.40", change: "+3.7%", status: "Active", marketCap: "$850M", volume: "$95M" },
-  { id: 9, name: "Cosmos", symbol: "ATOM", price: "8.90", change: "-0.8%", status: "Active", marketCap: "$2.1B", volume: "$130M" },
-  { id: 10, name: "Algorand", symbol: "ALGO", price: "0.11", change: "+1.2%", status: "Active", marketCap: "$780M", volume: "$55M" },
+  { id: 6, name: "AgriToken", symbol: "AGT", price: "100", change: "+1.3%", status: "Active", marketCap: "MWK 500M", volume: "MWK 50M" },
+  { id: 7, name: "EduChain", symbol: "EDC", price: "75", change: "-0.5%", status: "Active", marketCap: "MWK 350M", volume: "MWK 30M" },
+  { id: 8, name: "HealthBlock", symbol: "HLB", price: "250", change: "+2.7%", status: "Active", marketCap: "MWK 250M", volume: "MWK 25M" },
+  { id: 9, name: "TransportCoin", symbol: "TRC", price: "180", change: "-1.2%", status: "Active", marketCap: "MWK 400M", volume: "MWK 40M" },
+  { id: 10, name: "RuralConnect", symbol: "RLC", price: "50", change: "+0.8%", status: "Active", marketCap: "MWK 200M", volume: "MWK 20M" },
 ]
 
 // Mock data for user portfolio
 const userPortfolio = [
-  { id: 1, name: "DefiChain", symbol: "DFI", amount: 1000, value: "$1200" },
-  { id: 2, name: "Polkadot", symbol: "DOT", amount: 500, value: "$3900" },
-  { id: 3, name: "Cardano", symbol: "ADA", amount: 10000, value: "$5000" },
+  { id: 1, name: "MalawiCoin", symbol: "MWC", amount: 500, value: "MWK 250,000" },
+  { id: 2, name: "AfriConnect", symbol: "AFC", amount: 250, value: "MWK 62,500" },
+  { id: 3, name: "LilongweTech", symbol: "LTK", amount: 1000, value: "MWK 150,000" },
 ]
 
 // Mock data for transaction history
 const transactionHistory = [
-  { id: 1, type: "Buy", coin: "DFI", amount: 500, price: "$1.15", total: "$575", date: "2023-06-01" },
-  { id: 2, type: "Sell", coin: "DOT", amount: 100, price: "$7.90", total: "$790", date: "2023-05-28" },
-  { id: 3, type: "Buy", coin: "ADA", amount: 5000, price: "$0.48", total: "$2400", date: "2023-05-25" },
+  { id: 1, type: "Buy", coin: "MWC", amount: 200, price: "MWK 500", total: "MWK 100,000", date: "2024-01-15" },
+  { id: 2, type: "Sell", coin: "AFC", amount: 100, price: "MWK 250", total: "MWK 25,000", date: "2024-01-10" },
+  { id: 3, type: "Buy", coin: "LTK", amount: 500, price: "MWK 150", total: "MWK 75,000", date: "2024-01-05" },
+]
+
+// Mock data for ICO market trend
+const icoMarketTrend = [
+  { date: '2023-01', totalValue: 100, numberOfICOs: 10 },
+  { date: '2023-02', totalValue: 120, numberOfICOs: 12 },
+  { date: '2023-03', totalValue: 150, numberOfICOs: 15 },
+  { date: '2023-04', totalValue: 180, numberOfICOs: 18 },
+  { date: '2023-05', totalValue: 220, numberOfICOs: 22 },
+  { date: '2023-06', totalValue: 250, numberOfICOs: 25 },
+  { date: '2023-07', totalValue: 280, numberOfICOs: 28 },
+  { date: '2023-08', totalValue: 320, numberOfICOs: 32 },
+  { date: '2023-09', totalValue: 350, numberOfICOs: 35 },
+  { date: '2023-10', totalValue: 400, numberOfICOs: 40 },
+  { date: '2023-11', totalValue: 450, numberOfICOs: 45 },
+  { date: '2023-12', totalValue: 500, numberOfICOs: 50 },
 ]
 
 // Generate price history data
@@ -65,7 +81,7 @@ const generatePriceHistory = (initialPrice: string, days = 30) => {
 export default function Component() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
-  const [accountBalance, setAccountBalance] = useState(10000) // Mock account balance
+  const [accountBalance, setAccountBalance] = useState(1000) // Mock account balance
   const [selectedICO, setSelectedICO] = useState(null)
   const [showChart, setShowChart] = useState(false)
 
@@ -93,7 +109,7 @@ export default function Component() {
 
   return (
     <div className="flex flex-col w-full min-h-screen">
-      <header className="px-4 lg:px-20 h-14 flex items-center relative">
+      <header className="px-4 lg:px-32 h-14 flex items-center relative">
       <a className="flex items-center justify-center" href="#">
         <TrendingUp className="h-6 w-6" />
         <span className="ml-2 md:text-lg text-sm font-semibold">ICO Connect</span>
@@ -173,17 +189,39 @@ export default function Component() {
     </header>
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container lg:px-20 px-4 md:px-6">
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-              ICO Trading Platform
-            </h1>
-            <p className=" max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Discover, trade, and manage the latest blockchain Initial Coin Offerings (ICOs)
-            </p>
+          <div className="container lg:px-32 px-4 md:px-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="flex flex-col justify-center">
+                <h1 className="text-3xl font-bold my-2 tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
+                  ICO Trading Platform (Prototype)
+                </h1>
+                <p className="max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                  The main features of this platform include buying and selling ICOs, viewing ICO details, and managing your portfolio.
+                </p>
+                <p className="max-w-[500px] text-gray-400 text-sm/relaxed dark:text-gray-400">
+                  <span className="font-normal">Note:</span> This is just a prototype and all the data included is mock data. The product is still in development and is intended for demonstration purposes only.
+                </p>
+              </div>
+              <div className="bg-white dark:bg-gray-900 rounded-lg p-6">
+                <div className="h-[400px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={icoMarketTrend}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="date" />
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
+                      <Line type="monotone" dataKey="totalValue" stroke="#8884d8" activeDot={{ r: 8 }} name="Total ICO Value" />
+                      <Line type="monotone" dataKey="numberOfICOs" stroke="#82ca9d" name="Number of ICOs" />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
-          <div className="container lg:px-20 px-4 md:px-6">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-800">
+          <div className="container lg:px-32 px-4 md:px-6">
             <div className="flex justify-between items-center mb-8">
               <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">Featured ICOs</h2>
               <div className="flex items-center space-x-4">
@@ -313,7 +351,7 @@ export default function Component() {
           </div>
         </section>
         <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container lg:px-20 px-4 md:px-6">
+          <div className="container lg:px-32 px-4 md:px-6">
             <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl mb-8">All Available ICOs</h2>
             <div className="overflow-x-auto">
               <Table>
@@ -354,7 +392,7 @@ export default function Component() {
           </div>
         </section>
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
-          <div className="container lg:px-20 px-4 md:px-6">
+          <div className="container lg:px-32 px-4 md:px-6">
             <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl mb-8">Your Portfolio</h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {userPortfolio.map((item) => (
@@ -378,7 +416,7 @@ export default function Component() {
           </div>
         </section>
         <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container lg:px-20 px-4 md:px-6">
+          <div className="container lg:px-32 px-4 md:px-6">
             <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl mb-8">Transaction History</h2>
             <div className="overflow-x-auto">
               <Table>
@@ -410,7 +448,7 @@ export default function Component() {
         </section>
       </main>
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-        <p className="text-xs text-gray-500 dark:text-gray-400">© 2023 ICO Trading Platform. All rights reserved.</p>
+        <p className="text-xs text-gray-500 dark:text-gray-400"> 2023 ICO Trading Platform. All rights reserved.</p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <a className="text-xs hover:underline underline-offset-4" href="#">
             Terms of Service
@@ -446,3 +484,4 @@ export default function Component() {
     </div>
   )
 }
+
